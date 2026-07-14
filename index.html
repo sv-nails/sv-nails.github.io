@@ -212,47 +212,48 @@
     </div>
 </section>
 
-<!-- Повноекранний слайдер -->
+<!-- LIGHTBOX -->
 <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/95 flex items-center justify-center">
-    <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white text-4xl z-[101]">&times;</button>
+    <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white text-4xl z-[102] cursor-pointer">&times;</button>
+    
+    <!-- Слайдер для повноекранного режиму -->
     <div class="swiper lightboxSwiper w-full h-full">
         <div class="swiper-wrapper" id="lightbox-wrapper"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next text-white"></div>
+        <div class="swiper-button-prev text-white"></div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // ВАШ МАСИВ (Тут змінюйте порядок як забажаєте)
     const photoList = [16, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25];
     
     const galleryWrapper = document.getElementById('gallery-wrapper');
     const lightboxWrapper = document.getElementById('lightbox-wrapper');
 
-    // Генерація фото
     photoList.forEach((num, index) => {
-        // Галерея
         galleryWrapper.innerHTML += `
             <div class="swiper-slide cursor-pointer">
                 <div class="aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm">
                     <img src="images/gallery_${num}.jpg" class="w-full h-full object-cover" onclick="openLightbox(${index})">
                 </div>
             </div>`;
-        // Lightbox
         lightboxWrapper.innerHTML += `
-            <div class="swiper-slide flex items-center justify-center p-4">
+            <div class="swiper-slide flex items-center justify-center">
                 <img src="images/gallery_${num}.jpg" class="max-h-[90vh] max-w-[90vw] object-contain">
             </div>`;
     });
 
-    new Swiper('.gallerySwiper', { 
+    const swiper = new Swiper('.gallerySwiper', { 
         slidesPerView: 1, spaceBetween: 20, 
-        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, 
+        navigation: { nextEl: '.gallerySwiper .swiper-button-next', prevEl: '.gallerySwiper .swiper-button-prev' }, 
         breakpoints: { 768: { slidesPerView: 4 } } 
     });
 
-    const lightboxSwiper = new Swiper('.lightboxSwiper', { slidesPerView: 1 });
+    const lightboxSwiper = new Swiper('.lightboxSwiper', { 
+        slidesPerView: 1,
+        navigation: { nextEl: '.lightboxSwiper .swiper-button-next', prevEl: '.lightboxSwiper .swiper-button-prev' }
+    });
 
     function openLightbox(index) {
         document.getElementById('lightbox').classList.remove('hidden');
