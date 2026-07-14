@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="uk" class="scroll-smooth">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SV Nails — Манікюр, педикюр та воскова депіляція</title>
@@ -44,7 +45,20 @@
         .serif-title {
             font-family: 'Cormorant Garamond', serif;
         }
+        /* Примусове центрування слайдів у лайтбоксі */
+    .lightboxSwiper .swiper-slide {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    .lightboxSwiper {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
     </style>
+
+    
 </head>
 <body class="overflow-x-hidden antialiased">
 
@@ -213,18 +227,15 @@
 </section>
 
 <!-- LIGHTBOX -->
+<!-- LIGHTBOX -->
 <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/95">
-    <!-- Кнопка закриття -->
     <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white text-4xl z-[102] cursor-pointer">&times;</button>
     
-    <!-- Контейнер для центрування слайдера -->
-    <div class="relative w-full h-full flex items-center justify-center">
-        <div class="swiper lightboxSwiper w-full h-full">
-            <div class="swiper-wrapper" id="lightbox-wrapper"></div>
-            <!-- Навігація всередині лайтбоксу -->
-            <div class="swiper-button-next text-white"></div>
-            <div class="swiper-button-prev text-white"></div>
-        </div>
+    <!-- Видаляємо зайві обгортки, залишаємо чистий swiper -->
+    <div class="swiper lightboxSwiper w-full h-full">
+        <div class="swiper-wrapper" id="lightbox-wrapper"></div>
+        <div class="swiper-button-next text-white"></div>
+        <div class="swiper-button-prev text-white"></div>
     </div>
 </div>
 
@@ -259,12 +270,26 @@
         navigation: { nextEl: '.lightboxSwiper .swiper-button-next', prevEl: '.lightboxSwiper .swiper-button-prev' }
     });
 
-    function openLightbox(index) {
+function openLightbox(index) {
+        // 1. Показуємо блок
         document.getElementById('lightbox').classList.remove('hidden');
+        
+        // 2. Оновлюємо Swiper, щоб він перерахував ширину екрана
         lightboxSwiper.update();
+        
+        // 3. Переходимо до потрібного фото
         lightboxSwiper.slideTo(index, 0);
+        
+        // 4. ДОДАТКОВО: Примусово оновлюємо ще раз через мить, 
+        // щоб браузер встиг "промалювати" блок
+        setTimeout(() => {
+            lightboxSwiper.update();
+        }, 100);
     }
-    function closeLightbox() { document.getElementById('lightbox').classList.add('hidden'); }
+    
+    function closeLightbox() { 
+        document.getElementById('lightbox').classList.add('hidden'); 
+    }
 </script>
 
     <!-- ADVANTAGES -->
