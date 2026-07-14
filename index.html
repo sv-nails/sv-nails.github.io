@@ -195,39 +195,73 @@
     </section>
 
     <!-- GALLERY SECTION (Правка 3: Оновлені перше та четверте фото) -->
-    <section id="gallery" class="py-10 bg-white">
-        <div class="max-w-7xl mx-auto px-6 space-y-12">
-            
-            <div class="text-center space-y-2" data-aos="fade-up">
-                <span class="text-xs uppercase tracking-widest text-luxuryGold font-semibold">ГАЛЕРЕЯ</span>
-                <h2 class="serif-title text-4xl md:text-5xl text-luxuryDark">Естетика наших робіт</h2>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                
-                <a href="https://www.instagram.com/stories/highlights/18026288806082140/" target="_blank" class="group block aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm relative" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="images/gallery_1.jpg" alt="Манікюр SV Nails" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
-                </a>
-
-                <a href="https://www.instagram.com/stories/highlights/18026288806082140/" target="_blank" class="group block aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm relative" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="images/gallery_2.jpg" alt="Педикюр SV Nails" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
-                </a>
-
-                <a href="https://www.instagram.com/stories/highlights/18026288806082140/" target="_blank" class="group block aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm relative" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="images/gallery_3.jpg" alt="Ідеальні бліки" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
-                </a>
-
-                <a href="https://www.instagram.com/stories/highlights/18026288806082140/" target="_blank" class="group block aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm relative" data-aos="zoom-in" data-aos-delay="400">
-                    <img src="images/gallery_4.jpg" alt="Дизайн нігтів" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
-                </a>
-
-            </div>
+    <!-- GALLERY SECTION -->
+<!-- GALLERY SECTION -->
+<section id="gallery" class="py-10 bg-white">
+    <!-- Підключення Swiper.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
+    <div class="max-w-7xl mx-auto px-6 space-y-12">
+        <div class="text-center space-y-2" data-aos="fade-up">
+            <span class="text-xs uppercase tracking-widest text-luxuryGold font-semibold">ГАЛЕРЕЯ</span>
+            <h2 class="serif-title text-4xl md:text-5xl text-luxuryDark">Естетика наших робіт</h2>
         </div>
-    </section>
+
+        <div class="swiper gallerySwiper w-full">
+            <div class="swiper-wrapper">
+                <!-- 1. Старі 4 фото -->
+                <script>
+                    for(let i = 1; i <= 4; i++) {
+                        document.write(`
+                            <div class="swiper-slide cursor-pointer" onclick="openLightbox('images/gallery_${i}.jpg')">
+                                <div class="aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm">
+                                    <img src="images/gallery_${i}.jpg" alt="Робота SV Nails" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                                </div>
+                            </div>
+                        `);
+                    }
+                    // 2. Нові 21 фото (з 5 по 25)
+                    for(let i = 5; i <= 25; i++) {
+                        document.write(`
+                            <div class="swiper-slide cursor-pointer" onclick="openLightbox('images/gallery_${i}.jpg')">
+                                <div class="aspect-[3/4] rounded-[2rem] overflow-hidden border border-luxuryPink shadow-sm">
+                                    <img src="images/gallery_${i}.jpg" alt="Робота SV Nails ${i}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                                </div>
+                            </div>
+                        `);
+                    }
+                </script>
+            </div>
+            <!-- Стрілочки -->
+            <div class="swiper-button-next text-luxuryGold"></div>
+            <div class="swiper-button-prev text-luxuryGold"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Модальне вікно (Lightbox) -->
+<div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/90 flex items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white text-4xl hover:text-luxuryGold">&times;</button>
+    <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.gallerySwiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        breakpoints: { 768: { slidesPerView: 4 } }
+    });
+
+    function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').classList.remove('hidden');
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.add('hidden');
+    }
+</script>
 
     <!-- ADVANTAGES -->
     <section id="advantages" class="py-10 bg-luxuryCream">
