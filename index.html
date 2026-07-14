@@ -213,14 +213,18 @@
 </section>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/95 flex items-center justify-center">
+<div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/95">
+    <!-- Кнопка закриття -->
     <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white text-4xl z-[102] cursor-pointer">&times;</button>
     
-    <!-- Слайдер для повноекранного режиму -->
-    <div class="swiper lightboxSwiper w-full h-full">
-        <div class="swiper-wrapper" id="lightbox-wrapper"></div>
-        <div class="swiper-button-next text-white"></div>
-        <div class="swiper-button-prev text-white"></div>
+    <!-- Контейнер для центрування слайдера -->
+    <div class="relative w-full h-full flex items-center justify-center">
+        <div class="swiper lightboxSwiper w-full h-full">
+            <div class="swiper-wrapper" id="lightbox-wrapper"></div>
+            <!-- Навігація всередині лайтбоксу -->
+            <div class="swiper-button-next text-white"></div>
+            <div class="swiper-button-prev text-white"></div>
+        </div>
     </div>
 </div>
 
